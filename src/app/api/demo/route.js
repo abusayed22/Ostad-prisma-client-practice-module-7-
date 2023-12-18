@@ -180,12 +180,18 @@ export async function GET (req,res) {
             // const prisma = new PrismaClient({log:['query','info','warn','error']});  // Log enable terminal
 
             // execution time mange
-        const startTime = Date.now();
-        const res = await prisma.users.findMany() 
-        const excTime = (Date.now()-startTime) + " mile secound"  
+        // const startTime = Date.now();
+        // const res = await prisma.users.findMany() 
+        // const excTime = (Date.now()-startTime) + " mile secound"  
 
-        return NextResponse.json({excTime:excTime,status:'success',data:res})
-
+        
+        // return NextResponse.json({excTime:excTime,status:'success',data:res})
+        
+        
+                    /// Row querry
+        const res = await prisma.$queryRaw `SELECT * FROM users`
+        
+        return NextResponse.json({status:'success',data:res})
     }catch (e) {
         return NextResponse.json({status:"fail",data:e.message})
     }
