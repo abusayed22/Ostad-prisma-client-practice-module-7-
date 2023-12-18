@@ -160,11 +160,20 @@ export async function GET (req,res) {
         // })
 
             // groupe by
-        const res = await prisma.users.groupBy({
-            by:['password'],
-            _count: {id:true},
-            having: {password:'123'}    // ja ase ta nibe
-        })
+        // const res = await prisma.users.groupBy({
+        //     by:['password'],
+        //     _count: {id:true},
+        //     having: {password:'123'}    // ja ase ta nibe
+        // })
+
+
+                       /// Pagination
+            // 
+        const res = await prisma.users.findMany({
+            cursor:{id:5},       // which skip qty by id
+            // skip:5,             // which skip qty 
+            take:5
+        }) 
 
         return NextResponse.json({status:'success',data:res})
 
