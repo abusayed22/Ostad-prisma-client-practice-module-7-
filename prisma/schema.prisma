@@ -11,19 +11,6 @@ datasource db {
 }
 
 
-// employes
-model employes {
-  id Int @id @default(autoincrement())
-
-  name String
-  city String
-  pro String
-  salary String
-
-  created_at DateTime @default(now()) @db.Timestamp(0)
-  updated_at DateTime @default(now()) @db.Timestamp(0) @updatedAt
-}
-
 
 // user 
 model users{
@@ -73,3 +60,19 @@ model blogs{
   updated_at DateTime @default(now()) @db.Timestamp(0) @updatedAt
 }
 
+
+
+
+// employes
+model employes {
+  id Int @id @default(autoincrement())
+
+  name String
+  city String
+  pro String
+  salary Int
+  
+  birthD DateTime @default(now()) @db.Timestamp(0)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0) @updatedAt
+}

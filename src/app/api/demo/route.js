@@ -133,21 +133,38 @@ export async function GET (req,res) {
         // })
 
             // find with nested relation 
-        const res = await prisma.users.findMany({
+        // const res = await prisma.users.findMany({
 
-            include: {
-                profiles: {
-                    where: {firstName: "testing"}
-                },
-                blogs: true
-            }
+        //     include: {
+        //         profiles: {
+        //             where: {firstName: "testing"}
+        //         },
+        //         blogs: true
+        //     }
 
-        })
+        // })
 
             // find unique by id 
         // const res = await prisma.users.findUnique({
 
         // })
+
+                    /// Aggrigation 
+            // calculation
+        // const res = await prisma.users.aggregate({
+        //     _count: {id:true},   // total count of data
+        //     _avg: {id:true},     // average of properties
+        //     _max: {id:true},     // max of properties
+        //     _min: {id:true},      // man of properties
+        //     _sum: {id:true},      // total of properties
+        // })
+
+            // groupe by
+        const res = await prisma.users.groupBy({
+            by:['password'],
+            _count: {id:true},
+            having: {password:'123'}    // ja ase ta nibe
+        })
 
         return NextResponse.json({status:'success',data:res})
 
