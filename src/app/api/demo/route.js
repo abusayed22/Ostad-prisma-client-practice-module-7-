@@ -5,62 +5,63 @@ import { NextResponse } from 'next/server'
 export async function POST(req,res) {
 
 // insert data 
-    // try {
-    //     const reqData = await req.json()
+    try {
+        // const reqData = await req.json()
 
-             // prisma client
-    //     const prisma = new PrismaClient
+            //  prisma client
+        const prisma = new PrismaClient
 
-                    //  insert one user 
-         // const res = await prisma.users.create({
-         //     data: {
-         //         email: reqData["email"],
-         //         password:reqData["password"]
-         //     }
-         // })
+        //              insert one user 
+        //  const res = await prisma.users.create({
+        //      data: {
+        //          email: reqData["email"],
+        //          password:reqData["password"]
+        //      }
+        //  })
 
-                     // insert many
-         // const res= await prisma.users.createMany({
-         //     data:[
-         //         {email:'test@gamil.com',password:"1234"},
-         //         {email:'test1@gamil.com',password:"1234"}
-         //     ]
-         // })
+                    //  insert many
+        //  const res= await prisma.users.createMany({
+        //      data:[
+        //          {email:'test00@gamil.com',password:"1234"},
+        //          {email:'test100@gamil.com',password:"1234"}
+        //      ]
+        //  })
 
-    //                 // insert with relationship 
-    //     const res = await prisma.users.create({
-    //         data: {
-    //             email:'pro10@gamil.com',
-    //             password:"123",
-    //             profiles: {
-    //                 create: {
-    //                     firstName:"testing",
-    //                     lastName: "lastName",
-    //                     city: "city"
-    //                 }
-    //             },
-    //             blogs: {
-    //                 create: {
-    //                     post:"post"
-    //                 }
-    //             }
-    //         },
+                    // insert with relationship 
+        // const res = await prisma.users.create({
+        //     data: {
+        //         email:'profile0@gamil.com',
+        //         password:"123",
+        //         profiles: {
+        //             create: {
+        //                 firstName:"testing",
+        //                 lastName: "lastName",
+        //                 city: "city"
+        //             }
+        //         },
+        //         blogs: {
+        //             create: {
+        //                 post:"post Prima"
+        //             }
+        //         }
+        //     },
 
-    //     })
+        // })
 
-    //     return NextResponse.json({status:"success"})
-    // } catch (error) {
-    //     return NextResponse.json({status:"fail",data:error})
-    // }
+
+        return NextResponse.json({status:"success",data:res})
+    } catch (error) {
+        return NextResponse.json({status:"fail",data:error})
+    }
 
 
 
 // update & delete data 
-    try {
-        const prisma = new PrismaClient();
+    // try {
+    //     const prisma = new PrismaClient();
 
-        const {searchParams} = new URL(req.url);
-        const Id = parseInt(searchParams.get("id"))
+    //     const {searchParams} = new URL(req.url);
+    //     const Id = parseInt(searchParams.get("id"))
 
         // // update data
         // const res = await prisma.users.update({
@@ -73,10 +74,84 @@ export async function POST(req,res) {
         //     where:{id:Id}
         // })
 
-        return NextResponse.json({status:"success"})
+        // return NextResponse.json({status:"success"})
         
-    } catch (error) {
-        return NextResponse.json({status:"fail",data:error.message})
-    }
+    // } catch (error) {
+    //     return NextResponse.json({status:"fail",data:error.message})
+    // }
 
+}
+
+
+
+        // all query here // Find
+export async function GET (req,res) {
+    try {
+        const prisma = new PrismaClient();
+
+        
+            // find many
+        // const res = await prisma.users.findMany();
+
+            // find where & select
+        // const res = await prisma.users.findMany({
+        //     where: {id:19},
+        //     select: {email:true,password:false}
+        // })
+
+            // find search
+        // const res = await prisma.users.findMany({
+        //     where: {email: {contains: "pro"}}   // it's not cas sensitive
+        // })
+           
+            // find by order,skip,take
+        // const res = await prisma.users.findMany({
+        //     orderBy: {id:"desc" },  // by defualt get asc
+        //     skip: 2  ,           // skip first two data
+        //     take: 3,            // limit 3
+        // })
+
+            // find first and last
+        // const res = await prisma.users.findFirst({
+        //     orderBy: {id:"desc"}   // finding last data
+        // })
+
+            // find unique 
+        // const res = await prisma.users.findUnique({
+        //     where:{email: 'updated@gamil.com'}      // if exectly keyword match so return one data
+        // })
+
+            // find with relation 
+        // const res = await prisma.users.findMany({
+        //     where: {id:14},
+
+        //     include: {
+        //         profiles: true,
+        //         blogs: true
+        //     }
+
+        // })
+
+            // find with nested relation 
+        const res = await prisma.users.findMany({
+
+            include: {
+                profiles: {
+                    where: {firstName: "testing"}
+                },
+                blogs: true
+            }
+
+        })
+
+            // find unique by id 
+        // const res = await prisma.users.findUnique({
+
+        // })
+
+        return NextResponse.json({status:'success',data:res})
+
+    }catch (e) {
+        return NextResponse.json({status:"fail",data:e.message})
+    }
 }
