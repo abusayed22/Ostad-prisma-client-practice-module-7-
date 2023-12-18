@@ -87,7 +87,7 @@ export async function POST(req,res) {
         // all query here // Find
 export async function GET (req,res) {
     try {
-        const prisma = new PrismaClient();
+        const prisma = new PrismaClient({log:['query','info','warn','error']});  // Log enable terminal
 
         
             // find many
@@ -167,15 +167,24 @@ export async function GET (req,res) {
         // })
 
 
-                       /// Pagination
+                       /// Pagination 
             // 
-        const res = await prisma.users.findMany({
-            cursor:{id:5},       // which skip qty by id
-            // skip:5,             // which skip qty 
-            take:5
-        }) 
+        // const res = await prisma.users.findMany({
+        //     cursor:{id:5},       // which skip qty by id
+             // skip:5,             // which skip qty 
+        //     take:5
+        // }) 
 
-        return NextResponse.json({status:'success',data:res})
+                        /// log & execution time 
+            // log
+            // const prisma = new PrismaClient({log:['query','info','warn','error']});  // Log enable terminal
+
+            // execution time mange
+        const startTime = Date.now();
+        const res = await prisma.users.findMany() 
+        const excTime = (Date.now()-startTime) + " mile secound"  
+
+        return NextResponse.json({excTime:excTime,status:'success',data:res})
 
     }catch (e) {
         return NextResponse.json({status:"fail",data:e.message})
