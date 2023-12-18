@@ -189,8 +189,22 @@ export async function GET (req,res) {
         
         
                     /// Row querry
-        const res = await prisma.$queryRaw `SELECT * FROM users`
-        
+        // const res = await prisma.$queryRaw `SELECT * FROM users`
+
+                    
+                    /// Transaction & rollback
+            // kno relation data insert / etc khetre hole sob gulo inset/etc hobe ekta bad gele sob bad, kno partial oparation hobe na
+
+            // if went to like create a user & delete a blog so use $transaction
+            const createUser = prisma.users.create({
+                data: {email:'unique@d.com',password:'65'}
+            })
+            const deleteBlog = prisma.blogs.delete({
+                where: {id:9}
+            })
+
+            const res = await prisma.$transaction([createUser,deleteBlog])
+
         return NextResponse.json({status:'success',data:res})
     }catch (e) {
         return NextResponse.json({status:"fail",data:e.message})
