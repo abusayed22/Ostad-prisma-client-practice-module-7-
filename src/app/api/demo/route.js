@@ -196,14 +196,33 @@ export async function GET (req,res) {
             // kno relation data insert / etc khetre hole sob gulo inset/etc hobe ekta bad gele sob bad, kno partial oparation hobe na
 
             // if went to like create a user & delete a blog so use $transaction
-            const createUser = prisma.users.create({
-                data: {email:'unique@d.com',password:'65'}
-            })
-            const deleteBlog = prisma.blogs.delete({
-                where: {id:9}
-            })
+            // const createUser = prisma.users.create({
+            //     data: {email:'unique@d.com',password:'65'}
+            // })
+            // const deleteBlog = prisma.blogs.delete({
+            //     where: {id:9}
+            // })
 
-            const res = await prisma.$transaction([createUser,deleteBlog])
+            // const res = await prisma.$transaction([createUser,deleteBlog])
+
+
+                    /// Commparison Oparators
+            // equals ,not
+            // in,notIn
+            // lt,lte,gt,gte
+            // contains, startsWith,endWith
+        const res = await prisma.users.findMany({
+            // where: {id:{equals:5}}  // geting equals
+            // where: {id:{lt:5}}  // geting less than
+            // where: {id:{lte:5}}  // geting less than equals
+            // where: {id:{gte:5}}  // geting greater than equals
+            // where:{id:{in:[5,7]}}   // geting multiple value 
+            // where:{id:{notIn:[5,7]}}   // geting value without which valu
+            // where: {email:{contains:'pro'}} // ja ja match pabe sob niye nibe
+            // where: {email:{startsWith:'p'}}    // ja ja startwith match pabe sob niye nibe
+            where: {email:{endsWith:'m'}}    // ja ja endsWith match pabe sob niye nibe
+        }) 
+
 
         return NextResponse.json({status:'success',data:res})
     }catch (e) {
