@@ -211,7 +211,7 @@ export async function GET (req,res) {
             // in,notIn
             // lt,lte,gt,gte
             // contains, startsWith,endWith
-        const res = await prisma.users.findMany({
+        // const res = await prisma.users.findMany({
             // where: {id:{equals:5}}  // geting equals
             // where: {id:{lt:5}}  // geting less than
             // where: {id:{lte:5}}  // geting less than equals
@@ -220,8 +220,28 @@ export async function GET (req,res) {
             // where:{id:{notIn:[5,7]}}   // geting value without which valu
             // where: {email:{contains:'pro'}} // ja ja match pabe sob niye nibe
             // where: {email:{startsWith:'p'}}    // ja ja startwith match pabe sob niye nibe
-            where: {email:{endsWith:'m'}}    // ja ja endsWith match pabe sob niye nibe
-        }) 
+            // where: {email:{endsWith:'m'}}    // ja ja endsWith match pabe sob niye nibe
+        // }) 
+
+
+                    /// Logical Oparators
+            //AND,OR,Not
+        const res = await prisma.users.findMany({
+            // where: {AND:[                
+            //     {id:{gte:5}},
+            //     {email:'updated@gamil.com'},
+            // ]}
+
+            // where: {OR:[
+            //     {id:{lte:7}},
+            //     {email:'@gamil.com'}
+            // ]}
+
+            // where:{NOT:[
+            //     {id:{lte:7}},
+            //     {email:'@gamil.com'}
+            // ]}
+        })
 
 
         return NextResponse.json({status:'success',data:res})
