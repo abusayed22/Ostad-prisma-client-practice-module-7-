@@ -226,7 +226,7 @@ export async function GET (req,res) {
 
                     /// Logical Oparators
             //AND,OR,Not
-        const res = await prisma.users.findMany({
+        // const res = await prisma.users.findMany({
             // where: {AND:[                
             //     {id:{gte:5}},
             //     {email:'updated@gamil.com'},
@@ -241,6 +241,15 @@ export async function GET (req,res) {
             //     {id:{lte:7}},
             //     {email:'@gamil.com'}
             // ]}
+        // })
+
+                    /// working with date 
+            // lt,lte,gt,gte
+        const res = await prisma.users.findMany({
+            where: {email:{
+                lt: new Date('2021-20-11'),
+                gt: new Date('2021-20-11'),
+            }}
         })
 
 
